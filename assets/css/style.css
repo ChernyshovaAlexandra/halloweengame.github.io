@@ -1,0 +1,481 @@
+@font-face {
+    font-family: 'requiemregular';
+    src: url('../fonts/requiem-webfont.woff2') format('woff2'),
+    url('../fonts/requiem-webfont.woff') format('woff'),
+    url('../fonts/requiem-webfont.svg#requiemregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'cf_midnightregular';
+    src: url('../fonts/cfmidnight-webfont.woff2') format('woff2'),
+    url('../fonts/cfmidnight-webfont.woff') format('woff'),
+    url('../fonts/cfmidnight-webfont.svg#cf_midnightregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@keyframes fireball {
+    0% {transform: rotate(0deg); right: 40vw; bottom: 100px; opacity: 1}
+    10% {transform: rotate(640deg); right: 30vw; bottom: 0;}
+    20% {transform: rotate(0deg); right: 20vw; bottom: 100px;}
+    30% {transform: rotate(640deg); right: 10vw;bottom: 0;}
+    60% {transform: rotate(0deg) scale(1.5); bottom: 200px;}
+    100% {transform: rotate(0) scale(3); opacity: .5}
+}
+
+@keyframes userAttack {
+    0% {transform: rotate(0deg); left: 50vw; bottom: 100px; opacity: 1}
+    10% {transform: rotate(640deg); left: 25vw; bottom: 0;}
+    20% {transform: rotate(0deg); left: 15vw; bottom: 100px;}
+    30% {transform: rotate(640deg); left: 0;bottom: 0;}
+    60% {transform: rotate(0deg) scale(1.5); bottom: 200px;}
+    100% {transform: rotate(0) scale(3); opacity: .5}
+}
+
+@keyframes bg {
+    0% {background-position: 25% 100%;}
+    25% {background-position: 50% 150%;}
+    50% {background-position: 75% 100%;}
+    75% {background-position: 50% 150%;}
+    100% {background-position: 25% 100%;}
+}
+
+html, body{
+    font-family: 'requiemregular', Arial Helvetica sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+body{
+    overflow: hidden;
+    height:100vh;
+}
+h2{
+    color: rgb(219, 34, 32);
+    font-size: 50px;
+}
+h1{
+    color: rgb(250, 157, 28);
+    font-size: 75px;
+}
+h1, h2{
+    font-family: 'cf_midnightregular', Arial Helvetica sans-serif;
+    margin: 0;
+}
+canvas{
+    width: 500px;
+    height: 250px;
+    border: 10 px solid white;
+}
+main{
+    height: 100%;
+    position: relative;
+    background: url('../images/bg-main-fon.png') no-repeat center;
+    background-size: cover;
+    padding: 50px 0;
+    box-sizing: border-box;
+}
+main:before{
+    content: '';
+    display: block;
+    animation: bg 20s infinite;
+    background-image: url('../images/pole-game.png');
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 110% auto;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+.pole{
+    background-image: url('../images/bg-game.png');
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+
+}
+.parallax{
+    position: absolute;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+.parallax._1{
+    background-image: url('../images/parallax_1.png');
+    width: 80vw;
+    height: 40vw;
+    left: 10%;
+    top: 5%;
+}
+.parallax._2{
+    background-image: url('../images/parallax_2.png');
+    width: 50vw;
+    height: 50vw;
+    right: 10%;
+    top: 10%;
+}
+main h1, h2, h3, p, a, ul, li {
+    text-align: center;
+}
+.antogonist{
+    display: flex;
+    justify-content: space-between;
+    color: #ffee51;
+    font-size: 25px;
+    width: 1000px;
+    margin: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10%;
+}
+
+.task-modal{
+    width: 550px;
+    height: 250px;
+    background-color: black;
+    color: #FA9D1C;
+    border-radius: 20px;
+    -webkit-box-shadow: 0 22px 26px -16px rgb(250, 157, 28);
+    -moz-box-shadow: 0 22px 26px -16px rgb(250, 157, 28);
+    box-shadow: 0 22px 26px -16px rgb(250, 157, 28);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    margin: 145px auto;
+    transform: translateY(-100%) scale(.3);
+    opacity: 0;
+    transition: all .3s;
+}
+.task-modal.active{
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.number{
+    font-size: 15px;
+}
+.makingWord{
+    display: flex;
+    flex-direction:row;
+    justify-content: center;
+    margin-top: 45px;
+}
+
+.player,
+.monster{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.player_hp,
+.monster_hp{
+    color: white;
+    font-size:17px;
+    line-height: 1;
+}
+.monsterName{
+    font-size: 30px;
+}
+.icons{
+    width: 130px;
+    height: 255px;
+    margin: auto;
+}
+.player-icon, canvas{
+    width: 373px;
+    height: 350px;
+
+}
+
+.task {
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+}
+.task h3, .registration-field h3{
+    font-family: 'cf_midnightregular', Arial Helvetica sans-serif;
+}
+.registration-field input{
+    display: block;
+    /*flex-direction: row;*/
+}
+.task p{
+    font-size: 35px;
+    margin: 0 10px;
+}
+.sub-menu {
+    display: none;
+}
+
+.sub-menu.active {
+    display: block;
+    position: absolute;
+    z-index: 5;
+}
+a{
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+ul, li{
+    list-style: none;
+}
+a:hover{
+    color: orange;
+}
+.progress-bar {
+    display: block;
+    background-color: #1a1a1a;
+    padding: 3px;
+    width: 150px;
+    box-sizing: border-box;
+    font-size: 0;
+    margin: 0 auto 25px;
+    border-radius: 5px;
+    box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
+}
+
+.progress-bar span {
+    display: inline-block;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    padding: 5px;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+    transition: width .4s ease-in-out;
+    right:0;
+    background-color: green;
+}
+.book-icon {
+    width: 205px;
+    height: 75px;
+    background: url('../images/magicBookclosed.png') left no-repeat;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+.book-icon.hidden{
+    transform: translateX(-100%);
+}
+.book-icon:hover{
+    transform: rotate(5deg);
+    transform: scale(1.1);
+    box-shadow: 0 0 1px 15px rgba(#8A3B58, 0.4),
+    0 0 1px 30px rgba(#8A3B58, 0.1),
+    0 0 1px 45px rgba(#8A3B58, 0.1);
+}
+.magicBookOpened{
+    position: absolute;
+    z-index: 5;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin: auto;
+    background: url("../images/magicBook.png") no-repeat center;
+    width: 600px;
+    height: 405px;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 5px 45px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    transform: translate(-100%, -100%) scale(0);
+    opacity: .4;
+    transition: all .3s;
+}
+.magicBookOpened.active{
+    transform: translate(0,0) scale(1);
+    opacity: 1;
+}
+.level h3{
+    color: darkred;
+    font-size: 27px;
+    margin-bottom: 10px;
+}
+.spell{
+    cursor: pointer;
+    font-size:20px;
+}
+.spell-icon{
+    height:40px;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 50px;
+}
+
+.lightning-icon{
+    width: 30px;
+    height: 30px;
+    border: 2px solid #0000ff17;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    background: url('../images/lightening.png') no-repeat center;
+    -webkit-transition: border .4s;
+    -moz-transition: border .4s;
+    -ms-transition: border .4s;
+    -o-transition: border .4s;
+    transition: border .4s;
+}
+.lightning-icon:hover{
+    transform: rotate(360deg);
+}
+.arrow-icon{
+    background: url("../images/magicArrow.png") no-repeat ;
+    margin-left: 40px;
+}
+.fireball-icon{
+    background: url("../images/fireball.png") no-repeat ;
+    margin-left: 30px;
+}
+.level{
+    width: 275px;
+}
+.spell-name{
+    line-height: 0.2;
+}
+.answerButton {
+    position: relative;
+    display: inline-block;
+    color: #fa9d1c;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: rgba(255,255,255,.5) 1px 1px, rgba(100,100,100,.3) 3px 7px 3px;
+    user-select: none;
+    padding: 1em 2em;
+    outline: none;
+    border-radius: 3px / 100%;
+    background-color: transparent;
+    background-image:
+            linear-gradient(45deg, rgba(255,255,255,.0) 30%, rgba(255,255,255,.8), rgba(255,255,255,.0) 70%),
+            linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0) 20%, rgba(255,255,255,0) 90%, rgba(255,255,255,.3)),
+            linear-gradient(to right, rgba(125,125,125,1), rgba(255,255,255,.9) 45%, rgba(125,125,125,.5)),
+            linear-gradient(to right, rgba(125,125,125,1), rgba(255,255,255,.9) 45%, rgba(125,125,125,.5)),
+            linear-gradient(to right, rgba(223,190,170,1), rgba(255,255,255,.9) 45%, rgba(223,190,170,.5)),
+            linear-gradient(to right, rgba(223,190,170,1), rgba(255,255,255,.9) 45%, rgba(223,190,170,.5));
+    background-repeat: no-repeat;
+    background-size: 200% 100%, auto, 100% 2px, 100% 2px, 100% 1px, 100% 1px;
+    background-position: 200% 0, 0 0, 0 0, 0 100%, 0 4px, 0 calc(100% - 4px);
+    box-shadow: rgba(0,0,0,.5) 3px 10px 10px -10px;
+}
+.answerButton:hover {
+    transition: 0.5s linear;
+    background-position: -200% 0, 0 0, 0 0, 0 100%, 0 4px, 0 calc(100% - 4px);
+}
+.answerButton:active {
+    top: 1px;
+}
+input[type="submit" i] {
+    background-color: transparent;
+}
+.example, .example-pictures, .pics{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
+    font-family: Arial Helvetica sans-serif;
+}
+.example-pictures{
+    flex-direction: column;
+    margin:0;
+}
+.example.answer{
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.example.answer p{
+    font: 24px/1.5 'requiemregular';
+}
+.example input[type="text"]{
+    width: 50px;
+    margin: 0 10px;
+    text-align: center;
+    font-size: 20px;
+}
+.close-answer{
+    border: 1px solid;
+    background: transparent;
+    color: #fff;
+    padding: 0 70px;
+    font: 24px/2 'requiemregular';
+    cursor: pointer;
+    outline: none;
+}
+.close,
+.closeBook{
+    width: 25px;
+    height: 20px;
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    cursor: pointer;
+}
+
+
+.close:after,
+.closeBook:after{
+    content: 'x';
+    position: relative;
+    width: 20px;
+    height: 20px;
+    color: #fa9d1c;
+    font-size: 20px;
+    line-height: 1;
+}
+.player .fireball-animation{
+    left: 0;
+    animation: userAttack 1s;
+}
+.monster .fireball-animation{
+    right: 5vw;
+    animation: fireball 1s;
+}
+.fireball-animation{
+    background-image: url('../images/fireball-animation.png');
+    background-size: cover;
+    width: 100px;
+    height: 100px;
+    bottom: 200px;
+    position: absolute;
+    opacity: 0;
+    transform: rotate(0deg);
+}
+.ex-pic{
+    width:50px;
+    height:50px;
+    background-color: #fff;
+    margin: 0 10px;
+}
+.pumpkin{
+    background: url("../images/pumpkin.png") no-repeat center;
+    background-size:cover;
+}
+.bat{
+    background: url("../images/bat.png") no-repeat center;
+    background-size:cover;
+}
+.ghost {
+    background: url('../images/ghost.png') no-repeat;
+    background-size: 80%;
+}

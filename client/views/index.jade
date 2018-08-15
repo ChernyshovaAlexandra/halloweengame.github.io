@@ -1,0 +1,55 @@
+doctype html
+html(lang='en')
+    head
+        title Halloween game
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width')
+        link(rel='stylesheet', href='client/style/stylus/main.css')
+    body
+        main
+            .pole
+                h1 HALLOWEEN GAME
+                h2 Trick Or Treat?
+                nav
+                    .book-icon.magicBook
+                    .magicBookOpened
+                        section.level(data-level='1')
+                            h3 Level 1
+                            .spell-icon
+                                .lightning-icon
+                                p.spell-name.spell.lightning Lightning
+                        section.level(data-level='2')
+                            h3 Level 2
+                            .spell-icon.arrow-icon
+                                p.spell-name.spell.arrow Magic arrow
+                        section.level(data-level='3')
+                            h3 Level 3
+                            .spell-icon.fireball-icon
+                                p.spell-name.spell.fireball Fireball
+                        .closeBook
+                section.antogonist
+                    article.player-bar
+                        .player
+                            h3 You
+                            .progress-bar.playerBar
+                                span.player_hp.health 100
+                        .player-icon.icons
+                            canvas.player-icon-item
+                    article.monster-bar
+                        .monster
+                            h3.monsterName Monster
+                            .progress-bar.monsterBar
+                                span.monster_hp.health 100
+                        .monster-icon.icons
+                            canvas.monster-icon-item
+                .task-modal
+                    section.task
+                        h3
+                        .example
+            .parallax._1
+            .parallax._2
+        audio.audio(src='client/src/audio/halloweenTheme.mp3', loop='')
+        audio.audio(src='client/src/audio/spells/spell1.mp3')
+        audio.audio(src='client/src/audio/spells/spell2.mp3')
+        audio.audio(src='client/src/audio/spells/spell3.mp3')
+
